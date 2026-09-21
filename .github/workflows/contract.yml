@@ -1,0 +1,42 @@
+# Does this repo still describe the real API?
+#
+# Examples rot quietly: the code still parses, the markdown still renders, and
+# the only signal is a reader's first call failing. So check the two things
+# that can silently stop being true — the endpoints and fields we use, and the
+# links we send people to — against the live API, on a schedule.
+#
+# Weekly rather than daily: the API does not change often, and an alert nobody
+# reads is worse than no alert.
+name: contract
+
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: "17 7 * * 1" # Mondays, 07:17 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Syntax — the examples must at least parse
+        run: |
+          python -m compileall -q quickstart/main.py recipes/*/*.py
+          bash -n quickstart/curl.sh
+          python -c "import json; json.load(open('mcp/cursor.json'))"
+
+      - name: Contract — the live API still honours what we publish
+        run: python .github/check_contract.py
+
+      - name: Links — every URL we send people to still resolves
+        run: python .github/check_links.py
