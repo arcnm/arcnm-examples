@@ -1,0 +1,12 @@
+# Local mock of the ARCNM API, served from the public OpenAPI spec.
+#   docker compose up      →  http://127.0.0.1:4010/api/v1
+#
+# No key, no cost, no calculations: example data in the real response shapes.
+services:
+  mock:
+    image: stoplight/prism:5
+    ports:
+      - "4010:4010"
+    command: >
+      mock -h 0.0.0.0
+      https://api.arcnm.io/api/v1/openapi-public.json

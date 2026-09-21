@@ -1,0 +1,9 @@
+# Nothing here should ever hold a credential, but make it explicit.
+.env
+.env.*
+*.pem
+client/
+node_modules/
+__pycache__/
+.venv/
+openapi.json
