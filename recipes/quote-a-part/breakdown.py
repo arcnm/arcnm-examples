@@ -23,7 +23,9 @@ from pathlib import Path
 import requests
 
 API = os.environ.get("ARCNM_API_BASE", "https://api.arcnm.io/api/v1")
-TERMINAL = {"succeeded", "failed", "cancelled", "timed_out"}
+# `blocked`: created but parked, because the organization has no included
+# calculations left. It will not start on its own, so stop polling.
+TERMINAL = {"succeeded", "failed", "cancelled", "timed_out", "blocked"}
 REPO = Path(__file__).resolve().parents[2]
 
 
@@ -71,7 +73,8 @@ def main() -> None:
     print(" " * 40, end="\r")
 
     if calc["status"] != "succeeded":
-        sys.exit(f"calculation {calc['status']}")
+        why = (calc.get("coverage") or {}).get("message", "")
+        sys.exit(f"calculation {calc['status']}" + (f": {why}" if why else ""))
 
     if args.json:
         print(json.dumps(calc, indent=2))

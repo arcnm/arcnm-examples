@@ -1,11 +1,8 @@
 {
   "mcpServers": {
     "arcnm": {
-      "transport": {
-        "type": "http",
-        "url": "https://api.arcnm.io/mcp-server/mcp",
-        "headers": { "Authorization": "Bearer ${ARCNM_MCP_TOKEN}" }
-      }
+      "url": "https://api.arcnm.io/mcp-server/mcp",
+      "headers": { "Authorization": "Bearer ${env:ARCNM_MCP_TOKEN}" }
     }
   }
 }

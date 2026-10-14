@@ -32,7 +32,7 @@ a shared key, and no example writes your key to disk.
 | [`quickstart/`](quickstart/) | One part → one price, in cURL, Python and TypeScript |
 | [`recipes/quote-a-part/`](recipes/quote-a-part/) | A quote with its full cost breakdown and audit lineage |
 | [`recipes/bulk-rfq-triage/`](recipes/bulk-rfq-triage/) | Many parts at once, ranked by unit cost |
-| [`mcp/`](mcp/) | Connect Claude Code, Claude Desktop or Cursor to ARCNM |
+| [`mcp/`](mcp/) | Connect Claude, Claude Code, Cursor or GitHub Copilot to ARCNM |
 | [`mock/`](mock/) | A local mock of the API, from the public spec |
 
 Full documentation: **[arcnm.io/docs](https://arcnm.io/docs)** ·
@@ -51,7 +51,7 @@ have:
 
 ```bash
 curl -s https://api.arcnm.io/api/v1/environments/ \
-  -H "X-API-Key: $ARCNM_API_KEY" | jq '.data[] | {id, name}'
+  -H "X-API-Key: $ARCNM_API_KEY" | jq '.[] | {id, name}'
 ```
 
 [Environments →](https://arcnm.io/docs/concepts/calibration-environments)
@@ -97,7 +97,9 @@ ARCNM is MCP-native. The server is listed in the
 { "mcpServers": { "arcnm": { "url": "https://api.arcnm.io/mcp-server/mcp" } } }
 ```
 
-See [`mcp/`](mcp/) for per-client setup. Machine-readable indexes:
+See [`mcp/`](mcp/) for per-client setup, and
+[arcnm/arcnm-mcp](https://github.com/arcnm/arcnm-mcp) for every tool and
+prompt. Machine-readable indexes:
 [`llms.txt`](https://arcnm.io/llms.txt) ·
 [api-catalog](https://arcnm.io/.well-known/api-catalog)
 

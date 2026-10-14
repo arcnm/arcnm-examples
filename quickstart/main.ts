@@ -14,7 +14,9 @@ import { readFile } from "node:fs/promises"
 import { basename, extname, join } from "node:path"
 
 const API = process.env.ARCNM_API_BASE ?? "https://api.arcnm.io/api/v1"
-const TERMINAL = new Set(["succeeded", "failed", "cancelled", "timed_out"])
+// `blocked`: created but parked, because the organization has no included
+// calculations left. It will not start on its own, so stop polling.
+const TERMINAL = new Set(["succeeded", "failed", "cancelled", "timed_out", "blocked"])
 
 function env(name: string): string {
   const value = process.env[name]
@@ -68,6 +70,7 @@ let calc = (await created.json()) as {
   total_cost?: number
   setup_cost?: number
   unit_time_s?: number
+  coverage?: { message?: string } | null
 }
 console.log(`  queued: ${calc.id}`)
 
@@ -85,7 +88,8 @@ while (!TERMINAL.has(calc.status)) {
 
 process.stdout.write(`${" ".repeat(40)}\r`)
 if (calc.status !== "succeeded") {
-  console.error(`calculation ${calc.status}`)
+  const why = calc.coverage?.message
+  console.error(`calculation ${calc.status}${why ? `: ${why}` : ""}`)
   process.exit(1)
 }
 

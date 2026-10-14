@@ -26,7 +26,7 @@ docker compose up
 
 ## What you get, and what you don't
 
-The mock serves the **real, current** OpenAPI spec — all 142 endpoints, with
+The mock serves the **real, current** OpenAPI spec — every endpoint, with
 correct paths, parameters, status codes and response shapes. It is generated
 from the running API, so it cannot drift from it.
 

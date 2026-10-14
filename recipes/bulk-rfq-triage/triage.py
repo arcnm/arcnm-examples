@@ -27,7 +27,9 @@ from pathlib import Path
 import requests
 
 API = os.environ.get("ARCNM_API_BASE", "https://api.arcnm.io/api/v1")
-TERMINAL = {"succeeded", "failed", "cancelled", "timed_out"}
+# `blocked`: created but parked, because the organization has no included
+# calculations left. It will not start on its own, so stop polling.
+TERMINAL = {"succeeded", "failed", "cancelled", "timed_out", "blocked"}
 CAD_SUFFIXES = {".step", ".stp"}
 
 # Submit-side etiquette. Four in flight is polite for a batch of this size and
@@ -82,7 +84,8 @@ def await_result(s: requests.Session, row: dict) -> dict:
             return {**row, "error": "timeout"}
         time.sleep(3)
     if calc["status"] != "succeeded":
-        return {**row, "error": calc["status"]}
+        reason = (calc.get("coverage") or {}).get("reason")
+        return {**row, "error": f"{calc['status']} ({reason})" if reason else calc["status"]}
     return {
         **row,
         "unit_cost": calc.get("unit_cost"),

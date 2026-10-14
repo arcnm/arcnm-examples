@@ -39,14 +39,18 @@ for _ in $(seq 1 300); do
   CALC=$(curl -sS "$API/calculations/$ID" -H "X-API-Key: $ARCNM_API_KEY")
   STATUS=$(jq -r '.status' <<<"$CALC")
   case "$STATUS" in
-    succeeded|failed|cancelled|timed_out) break ;;
+    # blocked: parked, the organization has no included calculations left.
+    succeeded|failed|cancelled|timed_out|blocked) break ;;
   esac
   printf '  %s…\r' "$STATUS"
   sleep 2
 done
 
 printf '%*s\r' 40 ''
-[ "$STATUS" = succeeded ] || { echo "calculation $STATUS" >&2; exit 1; }
+[ "$STATUS" = succeeded ] || {
+  echo "calculation $STATUS $(jq -r '.coverage.message // empty' <<<"$CALC")" >&2
+  exit 1
+}
 
 jq -r '"
 \(.status)

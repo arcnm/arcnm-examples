@@ -1,0 +1,30 @@
+{
+  "$comment": "Every ARCNM operation the examples in this repo call, and the fields they send and read. .github/check_contract.py holds it against the live API every week; ARCNM checks it against every change before that change merges.",
+  "operations": [
+    {
+      "method": "POST",
+      "path": "/api/v1/calculations/upload-and-quote",
+      "request": {
+        "content_type": "multipart/form-data",
+        "required": ["part_number", "cad_file"],
+        "fields": ["costing_environment_id", "lot_size", "annual_volume", "drawing_file"]
+      },
+      "response": {"status": "202", "fields": ["id", "status"]}
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/calculations/{calculation_id}",
+      "response": {
+        "fields": [
+          "id", "status", "currency", "unit_cost", "total_cost", "setup_cost",
+          "unit_time_s", "total_time_s", "analytics", "coverage"
+        ]
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/environments/",
+      "response": {"fields": ["id", "name"]}
+    }
+  ]
+}
