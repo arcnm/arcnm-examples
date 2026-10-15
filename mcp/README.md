@@ -20,8 +20,7 @@ header:
   don't want to grant. Nothing to copy.
 - **An API key** (`ak_live_…` / `ak_test_…`) — long-lived, revocable, scoped.
   Best for an agent you run yourself. Create one at arcnm.io → Settings → API
-  keys, with `parts:read` to read, `parts:write` to quote and `uploads:write`
-  to upload files.
+  keys, with `parts:read` to read results and `parts:write` to price parts.
 
 ```bash
 export ARCNM_MCP_TOKEN="ak_live_…"
@@ -89,14 +88,18 @@ Once connected, these work as plain requests — the agent picks the tools:
 - *"Quote part BRACKET-001 at lot sizes 1, 10 and 100, and tell me where the
   cost goes."* (`quote_part`, `explain_cost`)
 - *"Which three things drive the most cost on this calculation?"*
-  (`get_cost_drivers`)
-- *"Compare this part across my costing environments and rank them."*
-  (`compare_environments`)
+  (`explain_cost`)
+- *"Price this part in my three costing environments and rank them."*
+  (`quote_part`, `compare_calculations`)
 - *"Read the process plan and tell me which operation dominates cycle time."*
   (`get_process_plan`)
 
-Uploading a file works over MCP too: `presign_upload`, then `confirm_upload`
-and `attach_upload`, or `get_upload_link` when the client cannot send files.
+A new part is priced in one call: `upload_and_quote` takes the STEP file (or
+a DXF flat pattern) and an optional PDF drawing. For a file on your computer,
+`get_upload_link` opens the ARCNM upload page instead. More tools (direct
+uploads, parts, job nests, the materials catalog…) are listed when the client
+sends the `X-MCP-Toolsets` header; see
+[toolsets](https://arcnm.io/docs/mcp#toolsets).
 Every tool carries `readOnlyHint` and `destructiveHint`, so a well-behaved
 client asks before it changes anything.
 
