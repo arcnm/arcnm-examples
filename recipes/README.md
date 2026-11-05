@@ -9,6 +9,7 @@ is that these execute.
 |---|---|
 | [`quote-a-part/breakdown.py`](quote-a-part/breakdown.py) | One part, its full cost breakdown, and what the audit blob carries |
 | [`bulk-rfq-triage/triage.py`](bulk-rfq-triage/triage.py) | A folder of parts, priced concurrently and ranked by unit cost, to `triage.csv` |
+| [`quote-fairness/fairness.py`](quote-fairness/fairness.py) | A supplier's quote against the should-cost at the same lot, line by line; `--brief` adds a negotiation brief written by an agent |
 
 Both need:
 

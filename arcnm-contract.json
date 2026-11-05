@@ -17,9 +17,15 @@
       "response": {
         "fields": [
           "id", "status", "currency", "unit_cost", "total_cost", "setup_cost",
-          "unit_time_s", "total_time_s", "analytics", "coverage"
+          "unit_time_s", "total_time_s", "analytics", "coverage", "part_number"
         ]
       }
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/calculations/{calculation_id}/cost-sheet",
+      "query": ["quantity"],
+      "response": {"fields": ["cost_sheet", "point"]}
     },
     {
       "method": "GET",
