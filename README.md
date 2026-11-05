@@ -32,7 +32,7 @@ a shared key, and no example writes your key to disk.
 | [`quickstart/`](quickstart/) | One part → one price, in cURL, Python and TypeScript |
 | [`recipes/quote-a-part/`](recipes/quote-a-part/) | A quote with its full cost breakdown and audit lineage |
 | [`recipes/bulk-rfq-triage/`](recipes/bulk-rfq-triage/) | Many parts at once, ranked by unit cost |
-| [`mcp/`](mcp/) | Connect Claude, Claude Code, Cursor or GitHub Copilot to ARCNM |
+| [`mcp/`](mcp/) | Connect Claude, Claude Code, Cursor, GitHub Copilot or a LlamaIndex agent to ARCNM |
 | [`mock/`](mock/) | A local mock of the API, from the public spec |
 
 Full documentation: **[arcnm.io/docs](https://arcnm.io/docs)** ·
