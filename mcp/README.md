@@ -74,6 +74,38 @@ Leave out `headers` to sign in instead.
 }
 ```
 
+## LlamaIndex
+
+LlamaIndex's own MCP client connects to the server, so there is no ARCNM
+package to install. [`llamaindex/agent.py`](llamaindex/agent.py) is a
+complete agent:
+
+```bash
+pip install llama-index-tools-mcp llama-index-llms-anthropic
+export ANTHROPIC_API_KEY="…"
+python mcp/llamaindex/agent.py "Which of my last five calculations was the most expensive per unit, and why?"
+```
+
+The core of it:
+
+```python
+from llama_index.tools.mcp import BasicMCPClient, McpToolSpec
+
+client = BasicMCPClient(
+    "https://api.arcnm.io/mcp-server/mcp",
+    headers={"Authorization": f"Bearer {token}"},
+)
+tools = await McpToolSpec(client=client).to_tool_list_async()
+```
+
+Pass `allowed_tools=[…]` to `McpToolSpec` to give the agent only the tools it
+needs; the example lists read-only ones, so it cannot start a calculation.
+
+## LangChain
+
+Use the [`langchain-arcnm`](https://github.com/arcnm/langchain-arcnm) package
+(`pip install langchain-arcnm`), which calls the REST API with your API key.
+
 ## Anything else that speaks MCP
 
 Point a Streamable HTTP transport at `https://api.arcnm.io/mcp-server/mcp`.

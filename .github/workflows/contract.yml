@@ -31,7 +31,7 @@ jobs:
 
       - name: Syntax — the examples must at least parse
         run: |
-          python -m compileall -q quickstart/main.py recipes/*/*.py
+          python -m compileall -q quickstart/main.py recipes/*/*.py mcp/llamaindex/agent.py
           bash -n quickstart/curl.sh
           python -c "import json; json.load(open('mcp/cursor.json'))"
 
