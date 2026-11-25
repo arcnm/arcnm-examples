@@ -1,0 +1,22 @@
+{
+  "name": "arcnm-pay-per-call",
+  "private": true,
+  "type": "module",
+  "description": "Price a part with no account, then pay for its cost in USDC over x402",
+  "scripts": {
+    "price": "node --experimental-strip-types pay.ts",
+    "check": "tsc"
+  },
+  "engines": {
+    "node": ">=22.6"
+  },
+  "dependencies": {
+    "@x402/core": "2.32.0",
+    "@x402/evm": "2.32.0",
+    "viem": "2.57.20"
+  },
+  "devDependencies": {
+    "@types/node": "22.19.1",
+    "typescript": "5.9.3"
+  }
+}

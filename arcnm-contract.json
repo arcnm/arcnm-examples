@@ -31,6 +31,46 @@
       "method": "GET",
       "path": "/api/v1/environments/",
       "response": {"fields": ["id", "name"]}
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/pay/environments",
+      "response": {"fields": ["default_environments", "environments"]}
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/pay/price",
+      "request": {"content_type": "model/step"},
+      "response": {
+        "status": "402",
+        "fields": ["offer_id", "units", "units_max", "environments", "price", "expires_at", "hint", "terms"]
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/pay/price",
+      "response": {
+        "status": "202",
+        "fields": ["status", "purchase_id", "result_url", "result_token", "retry_after", "progress"]
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/pay/price",
+      "response": {
+        "status": "200",
+        "fields": ["status", "purchase_id", "result_url", "result_token", "items", "receipt"]
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/pay/price/{purchase_id}",
+      "response": {"status": "202", "fields": ["status", "result_url", "retry_after", "progress"]}
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/pay/price/{purchase_id}",
+      "response": {"status": "200", "fields": ["status", "items", "receipt"]}
     }
   ]
 }

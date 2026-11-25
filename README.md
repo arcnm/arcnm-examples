@@ -19,6 +19,9 @@ You need your own API key — create one at
 [arcnm.io](https://arcnm.io) under **Settings → API keys**. Nothing here ships
 a shared key, and no example writes your key to disk.
 
+**No account?** [`pay-per-call/`](pay-per-call/) prices a part without one:
+the price check is free, and a calculation costs EUR 0.89, paid in USDC.
+
 > **Want to try the shape of the API without an account?**
 > [`mock/`](mock/) runs a local mock server from the public OpenAPI spec. No
 > key, no cost, no calculations — just the request and response shapes.
@@ -34,6 +37,7 @@ a shared key, and no example writes your key to disk.
 | [`recipes/bulk-rfq-triage/`](recipes/bulk-rfq-triage/) | Many parts at once, ranked by unit cost |
 | [`recipes/quote-fairness/`](recipes/quote-fairness/) | Is this supplier quote fair? The gap to should-cost, and where it could sit |
 | [`mcp/`](mcp/) | Connect Claude, Claude Code, Cursor, GitHub Copilot or a LlamaIndex agent to ARCNM |
+| [`pay-per-call/`](pay-per-call/) | No account: a free price check, then pay per calculation in USDC, over HTTP or MCP |
 | [`mock/`](mock/) | A local mock of the API, from the public spec |
 
 Full documentation: **[arcnm.io/docs](https://arcnm.io/docs)** ·
