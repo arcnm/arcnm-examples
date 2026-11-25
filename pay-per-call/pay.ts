@@ -108,7 +108,8 @@ if (!opts.pay) {
 
 const usdc = Number(offer.price.usdc)
 if (usdc > maxUsdc) exit(`the offer is ${usdc} USDC, above --max-usdc ${maxUsdc}: nothing paid`)
-const account = privateKeyToAccount(key as `0x${string}`)
+// A key with or without its 0x prefix, as pay.py takes it.
+const account = privateKeyToAccount(`0x${key!.replace(/^0x/, "")}`)
 const client = new x402HTTPClient(
   new x402Client().register(BASE, new ExactEvmScheme(account)).setSpendControls({ maxAmountPerPayment: `$${maxUsdc}` }),
 )
